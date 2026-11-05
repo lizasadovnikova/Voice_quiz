@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Голосовий тренажер (Azure API)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/microsoft-cognitiveservices-speech-sdk@latest/distrib/browser/microsoft.cognitiveservices.speech.sdk.bundle-min.js"></script>
+</head>
+<body class="bg-gray-100 min-h-screen flex items-center justify-center font-sans">
+
+    <div class="bg-white p-8 rounded-xl shadow-lg w-full max-w-md">
+        <h1 class="text-2xl font-bold text-center text-blue-600 mb-6">🎙️ Голосовий Тренажер</h1>
+
+        <!-- Екран налаштувань -->
+        <div id="setupScreen">
+            <p class="text-gray-600 mb-4 text-sm text-center">Введіть дані вашого Azure ресурсу для старту.</p>
+            <input type="text" id="azureKey" placeholder="Azure Key 1" value = "Key"class="w-full mb-3 p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+            <input type="text" id="azureRegion" placeholder="Region" value = "northeurope" class="w-full mb-4 p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+            <button onclick="startQuiz()" class="w-full bg-blue-600 text-white font-bold py-3 rounded-lg hover:bg-blue-700 transition">Розпочати квіз</button>
+        </div>
+
+        <!-- Екран квіза -->
+        <div id="quizScreen" class="hidden text-center flex flex-col">
+            <div class="flex justify-between items-center mb-4 text-gray-500 font-semibold">
+                <span id="questionCounter"></span>
+                <span class="text-red-500 bg-red-100 px-3 py-1 rounded-full">⏱ <span id="timerDisplay">20</span> с</span>
+            </div>
+            
+            <h2 id="questionText" class="text-xl font-bold mb-6 min-h-[60px] flex items-center justify-center">Завантаження...</h2>
+            
+            <button id="recordBtn" onclick="startRecording()" class="w-24 h-24 bg-red-500 text-white rounded-full flex items-center justify-center mx-auto shadow-lg hover:bg-red-700 hover:scale-105 transition transform text-3xl mb-4">
+                🎤
+            </button>
+            <p id="statusText" class="text-gray-500 text-sm mb-2">Натисніть кнопку, щоб відповісти</p>
+            
+            <!-- Кнопка пропуску -->
+            <button id="skipBtn" onclick="skipQuestion()" class="text-gray-400 hover:text-gray-600 text-sm underline mb-4 transition">Пропустити питання ➔</button>
+            
+            <div id="feedbackBox" class="hidden p-4 rounded-lg font-bold mb-4"></div>
+            
+            <button id="nextBtn" onclick="nextQuestion()" class="hidden w-full bg-gray-800 text-white font-bold py-3 rounded-lg hover:bg-gray-900 transition">Далі ➔</button>
+        </div>
+
+        <!-- Екран результатів -->
+        <div id="resultScreen" class="hidden text-center">
+            <h2 id="resultTitle" class="text-3xl font-bold mb-2">Завершено!</h2>
+            <p id="resultMessage" class="text-gray-600 mb-6 font-medium">Тут буде повідомлення</p>
+            <div class="text-xl text-gray-700 mb-6 border-t border-b py-4">
+                Ваш рахунок: <span id="finalScore" class="font-bold text-2xl"></span>
+            </div>
+            <button onclick="location.reload()" class="w-full bg-blue-600 text-white font-bold py-3 rounded-lg hover:bg-blue-700 transition">Спробувати ще раз</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
